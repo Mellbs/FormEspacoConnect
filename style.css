@@ -1,0 +1,39 @@
+footer{
+    background: linear-gradient(to right, #cdfdd7, #94b9ff);
+}
+header{
+    background: linear-gradient(to right, #cdfdd7, #94b9ff);
+}
+#botaosalvar{
+    background-color: #004AAD;
+}
+#btbSortear{
+    background-color: #004AAD;
+}
+#btnSortear{
+    background-color: #004AAD !important;
+}
+#titulo{
+    color: #004AAD;
+}
+#p_footer{
+    color: #004AAD;
+}
+#btn_buscar{
+    background-color: #5b825d;
+}
+#btneditar{
+    background-color: #7bb788;
+}
+
+.table-azul {
+    background-color: #004AAD !important;
+    color: #fff !important;
+  }
+  
+  .table-azul th {
+    background-color: #004AAD !important;
+    color: #fff !important;
+  }
+
+

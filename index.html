@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESPAÇO CONNECT</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class=" fw-bold text-center p-3">
+        <h1 id="titulo">ESPAÇO CONNECT</h1>
+    </header>
+
+    <div class="container mt-4">
+        <form id="formUsuarios" class="mb-4">
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-users fa-2x text-primary mb-2"></i>
+                            <h5 class="card-title">Total de Vagas</h5>
+                            <p class="card-text fs-4 fw-bold text-primary" id="total">40</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-user-check fa-2x text-success mb-2"></i>
+                            <h5 class="card-title">Vagas Preenchidas</h5>
+                            <p class="card-text fs-4 fw-bold text-success" id="preenchidas">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-user-plus fa-2x text-warning mb-2"></i>
+                            <h5 class="card-title">Vagas Disponíveis</h5>
+                            <p class="card-text fs-4 fw-bold text-warning" id="disponiveis">40</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="progresso" class="form-label fw-bold">Progresso de Ocupação</label>
+                <div class="progress">
+                    <div id="barraProgresso" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="nome" class="fw-bold">Nome</label>
+                <input type="text" class="form-control" id="nome" required placeholder="Nome...">
+            </div>
+
+            <div class="mb-3">
+                <label for="data" class="fw-bold">Data de Nascimento</label>
+                <input type="date" class="form-control" id="data" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="classificacao" class="fw-bold">Classificação</label>
+                <select id="classificacao" class="form-select" required>
+                    <option value="dicente">Dicente</option>
+                    <option value="docente">Docente</option>
+                    <option value="responsavel">Responsável</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="turma" class="fw-bold">Turma</label>
+                <select id="turma" class="form-select" required>
+                    <option value="outro">Outro</option>
+                    <option value="turma9A">9 A</option>
+                    <option value="turma9B">9 B</option>
+                    <option value="turma1A">1 A</option>
+                    <option value="turma1B">1 B</option>
+                    <option value="turma2A">2 A</option>
+                    <option value="turma2B">2 B</option>
+                    <option value="turma3A">3 A</option>
+                </select>
+            </div>
+
+            <button id="botaosalvar" type="submit" class="btn text-white">Salvar</button>
+        </form>
+
+        <div id="mensagem"></div>
+
+        <h2>Buscar...</h2>
+        <div class="input-group mb-3">
+            <input id="buscar-text" type="text" class="form-control" placeholder="Buscar...">
+            <button class="btn btn-success" type="button" id="btn_buscar">BUSCAR</button>
+            <button class="btn btn-secondary" type="button" id="btn_limpar_busca">LIMPAR BUSCA</button>
+        </div>
+
+        <table id="tabelaUsuarios" class="table table-bordered table-striped">
+            <thead class="table-azul">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Data</th>
+                    <th>Classificação</th>
+                    <th>Turma</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="mt-3 text-center">
+            <button id="btnLimparTodos" class="btn btn-danger btn-lg">
+                <i class="fas fa-trash-alt me-2"></i>Limpar Todos os Usuários
+            </button>
+        </div>
+
+        <div class="mt-4 p-4 border rounded shadow-sm bg-light">
+            <div class="text-center mb-4">
+                <i class="fas fa-dice-six fa-3x text-primary mb-3"></i>
+                <h3 class="fw-bold text-primary">Sorteio de Grupos</h3>
+                <p class="text-muted">Organize os usuários em grupos de forma aleatória e equilibrada</p>
+            </div>
+
+            <div class="row g-3 align-items-end">
+              <div class="col-md-4">
+                <label for="numGrupos" class="form-label fw-bold text-primary">Quantidade de Grupos</label>
+                <input type="number" id="numGrupos" class="form-control border-primary" min="1" placeholder="Ex: 4">
+              </div>
+              <div class="col-md-4">
+                <label for="numPorGrupo" class="form-label fw-bold text-primary">Usuários por Grupo</label>
+                <input type="number" id="numPorGrupo" class="form-control border-primary" min="1" placeholder="Ex: 5">
+              </div>
+              <div class="col-md-4">
+                <button id="btnSortear" class="btn btn-primary w-100 fw-bold">
+                    <i class="fas fa-random me-2"></i>Sortear Grupos
+                </button>
+              </div>
+            </div>
+
+            <div id="resultadoSorteio" class="mt-4"></div>
+          </div>
+    </div>
+
+    <footer class="text-dark fw-bold text-center p-3 mt-4">
+        <p id="p_footer">ESPAÇO CONNECT. Todos os direitos reservados</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+
+        // Função de embaralhar array (Fisher-Yates Shuffle)
+function embaralhar(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// Função de sorteio
+function sortearGrupos() {
+  $.get(baseURL + "usuarios_listar.php", function(lista) {
+    if (lista.length === 0) {
+      $('#resultadoSorteio').html('<div class="alert alert-warning">Nenhum usuário cadastrado!</div>');
+      return;
+    }
+
+    const totalUsuarios = lista.length;
+    const numGrupos = parseInt($('#numGrupos').val());
+    const numPorGrupo = parseInt($('#numPorGrupo').val());
+
+    // Determinar divisão
+    let grupos = [];
+    let usuarios = embaralhar([...lista]);
+
+    if (!isNaN(numGrupos) && numGrupos > 0) {
+      // Divide pelo número de grupos
+      const tamanhoGrupo = Math.ceil(totalUsuarios / numGrupos);
+      for (let i = 0; i < numGrupos; i++) {
+        grupos.push(usuarios.slice(i * tamanhoGrupo, (i + 1) * tamanhoGrupo));
+      }
+    } else if (!isNaN(numPorGrupo) && numPorGrupo > 0) {
+      // Divide pelo número de usuários por grupo
+      const numGruposCalc = Math.ceil(totalUsuarios / numPorGrupo);
+      for (let i = 0; i < numGruposCalc; i++) {
+        grupos.push(usuarios.slice(i * numPorGrupo, (i + 1) * numPorGrupo));
+      }
+    } else {
+      $('#resultadoSorteio').html('<div class="alert alert-danger">Informe o número de grupos ou de usuários por grupo!</div>');
+      return;
+    }
+
+    // Mostrar resultado na tela
+    let html = `<div class="alert alert-info fw-bold"><i class="fas fa-users me-2"></i>Total de usuários: ${totalUsuarios}</div>`;
+    grupos.forEach((grupo, idx) => {
+      html += `
+        <div class="card mb-3 shadow-sm border-primary">
+          <div class="card-header text-white fw-bold" style="background-color: #004AAD;">Grupo ${idx + 1} (${grupo.length} membros)</div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              ${grupo.map(u => `<li class="list-group-item"><i class="fas fa-user me-2 text-primary"></i>${u.nome}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      `;
+    });
+
+    $('#resultadoSorteio').html(html);
+
+  }, 'json').fail((xhr, status, error) => {
+    console.error("Erro ao carregar usuários para sorteio:", status, error);
+  });
+}
+
+// Evento de clique
+$('#btnSortear').on('click', sortearGrupos);
+
+        let total = 40;
+        let preenchidas = 0;
+
+        function atualizarTela() {
+            $('#preenchidas').text(preenchidas);
+            $('#disponiveis').text(total - preenchidas);
+            const percentual = total > 0 ? (preenchidas / total) * 100 : 0;
+            $('#barraProgresso').css('width', percentual + '%').attr('aria-valuenow', percentual);
+        }
+
+        const baseURL = "/FormEspacoConnect222/"; // ajuste se necessário
+
+        function carregarUsuarios() {
+            $.get(baseURL + "usuarios_listar.php", function(lista){
+                const tbody = $('#tabelaUsuarios tbody');
+                tbody.empty();
+                preenchidas = lista.length; // atualiza contador conforme número de usuários
+                atualizarTela();
+
+                lista.forEach(u => {
+                    tbody.append(`
+                        <tr>
+                            <td>${u.id}</td>
+                            <td>${u.nome}</td>
+                            <td>${u.data}</td>
+                            <td>${u.classificacao}</td>
+                            <td>${u.turma}</td>
+                            <td>
+                                <button id="btneditar" class="btn btn-sm" onclick="editarUsuario(${u.id}, '${u.nome}', '${u.data}', '${u.classificacao}', '${u.turma}')">Editar</button>
+                                <button class="btn btn-danger btn-sm" onclick="excluirUsuario(${u.id})">Excluir</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }, 'json').fail((xhr, status, error) => {
+                console.error("Erro ao carregar usuários:", status, error);
+            });
+        }
+
+        $('#formUsuarios').on('submit', function(e){
+            e.preventDefault();
+            $.post(baseURL + "usuarios_adicionar.php", {
+                nome: $('#nome').val(),
+                data: $('#data').val(),
+                classificacao: $('#classificacao').val(),
+                turma: $('#turma').val()
+            }, function(res) {
+                $('#mensagem').html(`<div class="alert alert-${res.status === 'sucesso' ? 'success' : 'danger'}">${res.mensagem}</div>`);
+                carregarUsuarios();
+                $('#formUsuarios')[0].reset();
+            }, 'json');
+        });
+
+        function excluirUsuario(id) {
+    if (confirm("Deseja realmente excluir este usuário?")) {
+        $.ajax({
+            url: baseURL + "usuario_excluir.php",
+            method: "POST",
+            data: { id },
+            dataType: "json",
+            success: function(res) {
+                if (res.status === "sucesso") {
+                    $('#mensagem').html(`<div class="alert alert-success">${res.mensagem}</div>`);
+                    carregarUsuarios();
+                } else {
+                    $('#mensagem').html(`<div class="alert alert-danger">${res.mensagem}</div>`);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Erro ao excluir usuário:", xhr.responseText);
+                $('#mensagem').html(`<div class="alert alert-danger">Erro ao excluir: ${error}</div>`);
+            }
+        });
+    }
+}
+
+        function buscarUsuarios() {
+            const busca = $('#buscar-text').val().trim();
+            if (busca === '') {
+                carregarUsuarios(); // se vazio, carrega todos
+                return;
+            }
+            $.get(baseURL + "api-busca.php", { usuario: busca }, function(lista){
+                const tbody = $('#tabelaUsuarios tbody');
+                tbody.empty();
+                preenchidas = lista.length; // atualiza contador conforme resultados da busca
+                atualizarTela();
+
+                lista.forEach(u => {
+                    tbody.append(`
+                        <tr>
+                            <td>${u.id}</td>
+                            <td>${u.nome}</td>
+                            <td>${u.data}</td>
+                            <td>${u.classificacao}</td>
+                            <td>${u.turma}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm" onclick="editarUsuario(${u.id}, '${u.nome}', '${u.data}', '${u.classificacao}', '${u.turma}')">Editar</button>
+                                <button class="btn btn-danger btn-sm" onclick="excluirUsuario(${u.id})">Excluir</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }, 'json').fail((xhr, status, error) => {
+                console.error("Erro ao buscar usuários:", status, error);
+            });
+        }
+
+        $('#btn_buscar').on('click', buscarUsuarios);
+        $('#btn_limpar_busca').on('click', function(){
+            $('#buscar-text').val('');
+            carregarUsuarios();
+        });
+
+        function limparTodosUsuarios() {
+            if (confirm("Deseja realmente excluir TODOS os usuários? Esta ação não pode ser desfeita!")) {
+                $.ajax({
+                    url: baseURL + "usuario_limpar_todos.php",
+                    method: "POST",
+                    dataType: "json",
+                    success: function(res) {
+                        if (res.status === "sucesso") {
+                            $('#mensagem').html(`<div class="alert alert-success">${res.mensagem}</div>`);
+                            carregarUsuarios();
+                        } else {
+                            $('#mensagem').html(`<div class="alert alert-danger">${res.mensagem}</div>`);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Erro ao limpar usuários:", xhr.responseText);
+                        $('#mensagem').html(`<div class="alert alert-danger">Erro ao limpar: ${error}</div>`);
+                    }
+                });
+            }
+        }
+
+        $('#btnLimparTodos').on('click', limparTodosUsuarios);
+        
+
+        function editarUsuario(id, nome, data, classificacao, turma) {
+            $('#nome').val(nome);
+            $('#data').val(data);
+            $('#classificacao').val(classificacao);
+            $('#turma').val(turma);
+
+            $('#formUsuarios').off('submit').on('submit', function(e){
+                e.preventDefault();
+                $.post(baseURL + "usuario_editar.php", {
+                    id,
+                    nome: $('#nome').val(),
+                    data: $('#data').val(),
+                    classificacao: $('#classificacao').val(),
+                    turma: $('#turma').val()
+                }, function(res){
+                    $('#mensagem').html(`<div class="alert alert-${res.status === 'sucesso' ? 'success' : 'danger'}">${res.mensagem}</div>`);
+                    carregarUsuarios();
+                    $('#formUsuarios')[0].reset();
+                    // volta o submit original de adicionar
+                    $('#formUsuarios').off('submit').on('submit', function(e){
+                        e.preventDefault();
+                        $.post(baseURL + "usuarios_adicionar.php", {
+                            nome: $('#nome').val(),
+                            data: $('#data').val(),
+                            classificacao: $('#classificacao').val(),
+                            turma: $('#turma').val()
+                        }, function(res) {
+                            $('#mensagem').html(`<div class="alert alert-${res.status === 'sucesso' ? 'success' : 'danger'}">${res.mensagem}</div>`);
+                            carregarUsuarios();
+                            $('#formUsuarios')[0].reset();
+                        }, 'json');
+                    });
+                }, 'json');
+            });
+        }
+
+        $(document).ready(() => carregarUsuarios());
+    </script>
+</body>
+</html>
+
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

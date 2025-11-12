@@ -1,0 +1,5 @@
+- [x] Adicionar link para Font Awesome no head do index.html
+- [x] Substituir os parágrafos de vagas por cards Bootstrap com ícones e métricas
+- [x] Adicionar barra de progresso para visualizar o percentual de preenchimento
+- [x] Atualizar o JavaScript para atualizar a barra de progresso dinamicamente
+- [x] Testar a visualização no navegador
