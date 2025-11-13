@@ -230,7 +230,7 @@ $('#btnSortear').on('click', sortearGrupos);
             $('#barraProgresso').css('width', percentual + '%').attr('aria-valuenow', percentual);
         }
 
-        const baseURL = "/FormEspacoConnect222/"; // ajuste se necessário
+        const baseURL = ""; // ajuste se necessário
 
         function carregarUsuarios() {
             $.get(baseURL + "usuarios_listar.php", function(lista){
